@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using Employee_API.Models;
 
 namespace Employee_API.Controllers.api.v1
 {
@@ -36,6 +37,27 @@ namespace Employee_API.Controllers.api.v1
                 }
             }
             return new JsonResult(table);
+        }
+
+        [HttpPost]
+        public JsonResult Post(Department data)
+        {
+            string getQuery = $@"insert into Department values ('{data.department_name}')";
+            DataTable table = new DataTable();
+            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
+            SqlDataReader sqlReader;
+            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
+                {
+                    sqlReader = sqlCommand.ExecuteReader();
+                    table.Load(sqlReader);
+                    sqlReader.Close();
+                    sqlConnection.Close();
+                }
+            }
+            return new JsonResult("Added Successfully");
         }
     }
 }
