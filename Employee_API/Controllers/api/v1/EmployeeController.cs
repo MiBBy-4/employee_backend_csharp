@@ -151,5 +151,27 @@ namespace Employee_API.Controllers.api.v1
                 return new JsonResult("Something went wrong(");
             }
         }
+
+        [Route("GetAllDepartmentNames")]
+        [HttpGet]
+        public JsonResult GetAllDepartmentNames()
+        {
+            string getQuery = @"select department_name from Department";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+            SqlDataReader sqlReader;
+            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
+                {
+                    sqlReader = sqlCommand.ExecuteReader();
+                    table.Load(sqlReader);
+                    sqlReader.Close();
+                    sqlConnection.Close();
+                }
+            }
+            return new JsonResult(table);
+        }
     }
 }
