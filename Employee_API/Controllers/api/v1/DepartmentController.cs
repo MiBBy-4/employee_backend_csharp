@@ -59,5 +59,47 @@ namespace Employee_API.Controllers.api.v1
             }
             return new JsonResult("Added Successfully");
         }
+
+        [HttpPut]
+        public JsonResult Put(Department data)
+        {
+            string getQuery = $@"update Department set department_name = '{data.department_name}' where department_id = '{data.department_id}'";
+            DataTable table = new DataTable();
+            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
+            SqlDataReader sqlReader;
+            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
+                {
+                    sqlReader = sqlCommand.ExecuteReader();
+                    table.Load(sqlReader);
+                    sqlReader.Close();
+                    sqlConnection.Close();
+                }
+            }
+            return new JsonResult("Updated Successfully");
+        }
+
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            string getQuery = $@"delete from Department where department_id = '{id}'";
+            DataTable table = new DataTable();
+            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
+            SqlDataReader sqlReader;
+            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
+                {
+                    sqlReader = sqlCommand.ExecuteReader();
+                    table.Load(sqlReader);
+                    sqlReader.Close();
+                    sqlConnection.Close();
+                }
+            }
+            return new JsonResult("Deleted Successfully");
+        }
     }
 }
