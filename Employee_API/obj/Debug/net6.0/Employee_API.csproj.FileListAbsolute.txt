@@ -29,3 +29,9 @@ A:\C#\Курсовая работа\Employee_API\Employee_API\obj\Debug\net6.0\r
 A:\C#\Курсовая работа\Employee_API\Employee_API\obj\Debug\net6.0\Employee_API.pdb
 A:\C#\Курсовая работа\Employee_API\Employee_API\obj\Debug\net6.0\Employee_API.genruntimeconfig.cache
 A:\C#\Курсовая работа\Employee_API\Employee_API\obj\Debug\net6.0\ref\Employee_API.dll
+A:\C#\Курсовая работа\Employee_API\Employee_API\bin\Debug\net6.0\System.Data.SqlClient.dll
+A:\C#\Курсовая работа\Employee_API\Employee_API\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+A:\C#\Курсовая работа\Employee_API\Employee_API\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+A:\C#\Курсовая работа\Employee_API\Employee_API\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+A:\C#\Курсовая работа\Employee_API\Employee_API\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+A:\C#\Курсовая работа\Employee_API\Employee_API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
