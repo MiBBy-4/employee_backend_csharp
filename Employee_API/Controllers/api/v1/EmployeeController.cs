@@ -130,27 +130,6 @@ namespace Employee_API.Controllers.api.v1
 
         [Route("SaveFile")]
         [HttpPost]
-        public JsonResult SaveFile()
-        {
-            try
-            {
-                var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
-
-                using(var stream = new FileStream(physicalPath, FileMode.Create))
-                {
-                    postedFile.CopyTo(stream);
-                }
-
-                return new JsonResult(filename);
-            }
-            catch (Exception)
-            {
-                return new JsonResult("Something went wrong(");
-            }
-        }
 
         [Route("GetAllDepartmentNames")]
         [HttpGet]
