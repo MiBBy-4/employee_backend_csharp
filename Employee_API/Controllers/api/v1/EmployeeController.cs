@@ -26,7 +26,7 @@ namespace Employee_API.Controllers.api.v1
         [HttpGet]
         public JsonResult Get()
         {
-            string getQuery = @"select employee_id, employee_name, convert(varchar(10), date_of_joining, 120) as date_of_joining, photo_file_name, department_id from Employee";
+            string getQuery = @"select e.employee_id, e.employee_name, convert(varchar(10), e.date_of_joining, 120) as date_of_joining, e.photo_file_name, d.department_name from Employee e join Department d on d.department_id = e.department_id;";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
@@ -135,7 +135,7 @@ namespace Employee_API.Controllers.api.v1
         [HttpGet]
         public JsonResult GetAllDepartmentNames()
         {
-            string getQuery = @"select department_name from Department";
+            string getQuery = @"select department_id, department_name from Department";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
