@@ -60,8 +60,8 @@ namespace Employee_API.Controllers.api.v1
             return new JsonResult("Added Successfully");
         }
 
-        [HttpPut]
-        public JsonResult Put(Department data)
+        [HttpPatch]
+        public JsonResult Patch(Department data)
         {
             string getQuery = $@"update Department set department_name = '{data.department_name}' where department_id = '{data.department_id}'";
             DataTable table = new DataTable();
@@ -78,7 +78,7 @@ namespace Employee_API.Controllers.api.v1
                     sqlConnection.Close();
                 }
             }
-            return new JsonResult("Updated Successfully");
+            return new JsonResult(table);
         }
 
         [HttpDelete("{id}")]

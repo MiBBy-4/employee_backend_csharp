@@ -65,8 +65,8 @@ namespace Employee_API.Controllers.api.v1
             return new JsonResult("Added Successfully");
         }
 
-        [HttpPut]
-        public JsonResult Put(Employee data)
+        [HttpPatch]
+        public JsonResult Patch(Employee data)
         {
             string getQuery = $@"update Employee set employee_name = '{data.employee_name}', date_of_joining = '{data.date_of_joining}', photo_file_name = '{data.photo_file_name}', department_id = {data.depatrment_id} where employee_id = '{data.employee_id}'";
             DataTable table = new DataTable();
@@ -127,9 +127,6 @@ namespace Employee_API.Controllers.api.v1
             }
             return new JsonResult(table);
         }
-
-        [Route("SaveFile")]
-        [HttpPost]
 
         [Route("GetAllDepartmentNames")]
         [HttpGet]
