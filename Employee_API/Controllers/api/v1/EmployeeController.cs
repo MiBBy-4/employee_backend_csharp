@@ -26,7 +26,7 @@ namespace Employee_API.Controllers.api.v1
         [HttpGet]
         public JsonResult Get()
         {
-            string getQuery = @"select e.employee_id, e.employee_name, convert(varchar(10), e.date_of_joining, 120) as date_of_joining, e.photo_file_name, d.department_name from Employee e join Department d on d.department_id = e.department_id;";
+            string getQuery = @"select e.employee_id, e.employee_name, convert(varchar(10), e.date_of_joining, 120) as date_of_joining, d.department_name from Employee e join Department d on d.department_id = e.department_id;";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
@@ -47,7 +47,7 @@ namespace Employee_API.Controllers.api.v1
         [HttpPost]
         public JsonResult Post(Employee data)
         {
-            string getQuery = $@"insert into Employee values('{data.employee_name}', '{data.date_of_joining}','{data.photo_file_name}', '{data.depatrment_id}');";
+            string getQuery = $@"insert into Employee values('{data.employee_name}', '{data.date_of_joining}', '{data.department_id}');";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
@@ -68,7 +68,7 @@ namespace Employee_API.Controllers.api.v1
         [HttpPatch]
         public JsonResult Patch(Employee data)
         {
-            string getQuery = $@"update Employee set employee_name = '{data.employee_name}', date_of_joining = '{data.date_of_joining}', photo_file_name = '{data.photo_file_name}', department_id = {data.depatrment_id} where employee_id = '{data.employee_id}'";
+            string getQuery = $@"update Employee set employee_name = '{data.employee_name}', date_of_joining = '{data.date_of_joining}', department_id = {data.department_id} where employee_id = '{data.employee_id}'";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
