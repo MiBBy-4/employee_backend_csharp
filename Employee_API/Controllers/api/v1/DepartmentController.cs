@@ -12,115 +12,55 @@ namespace Employee_API.Controllers.api.v1
     public class DepartmentController : ControllerBase
     {
         private readonly IConfiguration __configuration;
+        private readonly IWebHostEnvironment _env;
 
-        public DepartmentController(IConfiguration configuration)
+        public DepartmentController(IConfiguration configuration, IWebHostEnvironment env)
         {
             __configuration = configuration;
+            _env = env;
         }
 
         [HttpGet]
         public JsonResult Get()
         {
-            string getQuery = @"select * from Department";
-            DataTable table = new DataTable();
-            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
-            SqlDataReader sqlReader;
-            using(SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
-            {
-                sqlConnection.Open();
-                using(SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
-                {
-                    sqlReader = sqlCommand.ExecuteReader();
-                    table.Load(sqlReader);
-                    sqlReader.Close();
-                    sqlConnection.Close();
-                }
-            }
-            return new JsonResult(table);
+           DataTable departments = Department.all(__configuration);
+            return new JsonResult(departments);
         }
 
         [HttpPost]
         public JsonResult Post(Department data)
         {
-            string getQuery = $@"insert into Department values ('{data.department_name}')";
-            DataTable table = new DataTable();
-            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
-            SqlDataReader sqlReader;
-            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
-            {
-                sqlConnection.Open();
-                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
-                {
-                    sqlReader = sqlCommand.ExecuteReader();
-                    table.Load(sqlReader);
-                    sqlReader.Close();
-                    sqlConnection.Close();
-                }
-            }
-            return new JsonResult("Added Successfully");
+            DataTable departments = Department.create(data, __configuration);
+            return new JsonResult(departments);
         }
 
         [HttpPatch]
         public JsonResult Patch(Department data)
         {
-            string getQuery = $@"update Department set department_name = '{data.department_name}' where department_id = '{data.department_id}'";
-            DataTable table = new DataTable();
-            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
-            SqlDataReader sqlReader;
-            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
-            {
-                sqlConnection.Open();
-                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
-                {
-                    sqlReader = sqlCommand.ExecuteReader();
-                    table.Load(sqlReader);
-                    sqlReader.Close();
-                    sqlConnection.Close();
-                }
-            }
-            return new JsonResult(table);
+            DataTable departments = Department.update(data, __configuration);
+            return new JsonResult(departments);
         }
 
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string getQuery = $@"delete from Department where department_id = '{id}'";
-            DataTable table = new DataTable();
-            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
-            SqlDataReader sqlReader;
-            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
-            {
-                sqlConnection.Open();
-                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
-                {
-                    sqlReader = sqlCommand.ExecuteReader();
-                    table.Load(sqlReader);
-                    sqlReader.Close();
-                    sqlConnection.Close();
-                }
-            }
-            return new JsonResult("Deleted Successfully");
+            DataTable departments = Department.destroy(id, __configuration);
+            return new JsonResult(departments);
         }
 
         [HttpGet("{id}")]
         public JsonResult Show(int id)
         {
-            string getQuery = $@"select * from Department where department_id = '{id}'";
-            DataTable table = new DataTable();
-            string sqlDataSource = __configuration.GetConnectionString("EmployeeAppCon");
-            SqlDataReader sqlReader;
-            using (SqlConnection sqlConnection = new SqlConnection(sqlDataSource))
-            {
-                sqlConnection.Open();
-                using (SqlCommand sqlCommand = new SqlCommand(getQuery, sqlConnection))
-                {
-                    sqlReader = sqlCommand.ExecuteReader();
-                    table.Load(sqlReader);
-                    sqlReader.Close();
-                    sqlConnection.Close();
-                }
-            }
-            return new JsonResult(table);
+            DataTable departments = Department.find(id, __configuration);
+            return new JsonResult(departments);
+        }
+
+        [Route("GetEmployees/{id}")]
+        [HttpGet]
+        public JsonResult getEmployees(int id)
+        {
+            DataTable employees = Department.employees(id, __configuration);
+            return new JsonResult(employees);
         }
     }
 }
