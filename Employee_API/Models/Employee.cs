@@ -12,7 +12,7 @@ namespace Employee_API.Models
 
         static public DataTable all(IConfiguration _configuration)
         {
-            string getQuery = @"select e.employee_id, e.employee_name, convert(varchar(10), e.date_of_joining, 120) as date_of_joining, d.department_name from Employee e join Department d on d.department_id = e.department_id;";
+            string getQuery = @"select e.employee_id, e.employee_name, format(e.date_of_joining, 'yyyy-MM-dd') as date_of_joining, d.department_name from Employee e join Department d on d.department_id = e.department_id;";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
@@ -96,7 +96,7 @@ namespace Employee_API.Models
 
         static public DataTable find(int id, IConfiguration _configuration)
         {
-            string getQuery = $@"select * from Employee where employee_id = '{id}'";
+            string getQuery = $@"select e.employee_id, e.employee_name, format(e.date_of_joining, 'yyyy-MM-dd') as date_of_joining, d.department_name from Employee e join Department d on d.department_id = e.department_id where employee_id = '{id}';";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
             SqlDataReader sqlReader;
